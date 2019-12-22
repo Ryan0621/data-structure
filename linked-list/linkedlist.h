@@ -13,7 +13,7 @@ class LinkedList : public BagInterface<ItemType> {
         Node<ItemType>* getPointerTo( const ItemType& target) const ;
     public :
         LinkedList();
-        LinkedList( const LinkedList<ItemType>& aBag);
+        LinkedList( const LinkedList<ItemType>* aBag);
         virtual ~LinkedList();
         int getCurrentSize() const ;
         bool isEmpty() const ;
@@ -128,7 +128,8 @@ void LinkedList<ItemType>::clear() {
 }
 
 template < class ItemType>
-LinkedList<ItemType>::LinkedList( const LinkedList<ItemType>& aBag) {
+LinkedList<ItemType>::LinkedList( const LinkedList<ItemType>* aBag) {
+    cout << "call" << endl;
     itemCount = aBag->itemCount;
     Node<ItemType>* origChainPtr = aBag->headPtr;
     if (origChainPtr == nullptr )
@@ -140,8 +141,8 @@ LinkedList<ItemType>::LinkedList( const LinkedList<ItemType>& aBag) {
         // Copy remaining nodes
         Node<ItemType>* newChainPtr = headPtr;
         // Last-node pointer
-        while (origChainPtr != nullptr ) {
-            origChainPtr = origChainPtr ->getNext(); // Advance pointer
+        while (origChainPtr->getNext() != nullptr ) {
+            origChainPtr = origChainPtr->getNext(); // Advance pointer
             // Get next item from original chain
             ItemType nextItem = origChainPtr->getItem();
             // Create a new node containing the next item
@@ -154,86 +155,3 @@ LinkedList<ItemType>::LinkedList( const LinkedList<ItemType>& aBag) {
         newChainPtr->setNext( nullptr ); // Flag end of new chain
     }
 }
-
-//#include <iostream>
-//#ifndef LINKEDLIST_H
-//#define LINKEDLIST_H
-//using namespace std;
-//
-//template <class T>
-//struct Node {
-//    T key;
-//    Node* next;
-//};
-//
-//template <class U>
-//class LinkedList {
-//    private:
-//        Node<U>* head;
-//    public:
-//        LinkedList() { head = nullptr; }
-//        bool listSearch(U k);
-//        void listAppend(U k);
-//        void listPrint();
-//        void listDelete(U k);
-//};
-//#endif
-//
-//// Let temp represent temporary variable for storing head value or iteration
-//// Let x represent a new node creation with key value
-//// Note: head variable stores address, doesn't contain attributes next or key
-//template <class U>
-//bool LinkedList<U>::listSearch(U k) {
-//    Node<U>* temp;
-//    temp = head;
-//    while (temp!=nullptr && temp->key!=k) {
-//        temp = temp->next;
-//    }
-//    if (temp!=nullptr) {
-//        return true;
-//    }
-//    else return false;
-//}
-//
-//template <class U>
-//void LinkedList<U>::listPrint() {
-//    Node<U>* temp;
-//    temp = head;
-//    while (temp!=nullptr) {
-//        cout << temp->key << endl;
-//        temp = temp->next;
-//    }
-//}
-//
-//template <class U>
-//void LinkedList<U>::listAppend(U k) {
-//    Node<U>* temp;
-//    Node<U>* x = new Node<U>;
-//    x->key = k;
-//    if (head == nullptr) {
-//        head = x;
-//    }
-//    else {
-//        temp = head;
-//        while (temp->next!=nullptr) {
-//            temp = temp->next;
-//        }
-//        temp->next = x;
-//    }
-//}
-//
-//template <class U>
-//void LinkedList<U>::listDelete(U k) {
-//    Node<U>* temp;
-//    Node<U>* prev;
-//    temp = head;
-//    if (temp->key==k)
-//    while (temp->key!=k && temp!=nullptr) {
-//        prev = temp;
-//        temp = temp->next;
-//    }
-//    if(temp!=nullptr) {
-//        prev->next = temp->next;
-//    }
-//    delete temp;
-//}

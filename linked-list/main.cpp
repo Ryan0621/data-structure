@@ -10,9 +10,20 @@ int main() {
     l1->add(3);
     l1->add(2);
 
-    LinkedList<int>* l2 = l1;
+    LinkedList<int>* l2 = new LinkedList<int>(l1);
     l2->remove(2);
-    cout << l1->getCurrentSize() << endl << l2->getCurrentSize();
+
+    vector<int> temp1, temp2;
+    temp1 = l1->toVector();
+    temp2 = l2->toVector();
+
+    for (int i=0; i<temp1.size(); i++) {
+        cout << temp1[i] << ' ';
+    }
+    cout << endl;
+    for (int i=0; i<temp2.size(); i++) {
+        cout << temp2[i] << ' ';
+    }
 
     return 0;
 }
